@@ -35,3 +35,13 @@ def frequency(text):
                 count = count + 1
         freq[i] = count * 1.0 / total
     return freq
+
+def encode(text, key, bool):
+    i = 0
+    while i != len(text):
+        fullKey += key[len(key) % i]
+        i = i + 1
+    
+
+
+print(encode(plaintext, key, bool))
