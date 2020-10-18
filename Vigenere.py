@@ -12,29 +12,16 @@ def shiftText(text, shift):
     for i in text:
         if i in letters:
             index = letters.find(i)
-            index = index - shift
+            index = index + shift
             if index < 0:
                 index = index + 26
+            if index > 25:
+                index = index - 26
             decrypt = decrypt + letters[index]
         else:
             decrypt = decrypt + i
     return decrypt
 
-
-def frequency(text):
-    total = 0
-    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    for i in text:
-        if i.isalpha():
-            total = total + 1
-    for i in range(26):
-        count = 0
-        for j in text:
-            if (j == letters[i:i+1]):
-                count = count + 1
-        freq[i] = count * 1.0 / total
-    return freq
 
 def vigenereCipher(text, key, bool):
     x = 0
@@ -46,8 +33,8 @@ def vigenereCipher(text, key, bool):
         x = x + 1
     for i in range(len(text)):
         shift = letters.find(fullKey[i])
-    if (not bool):
-        shift *= -1
+        if (not bool):
+            shift = letters.find(fullKey[i]) * -1
         ans = ans + shiftText(text[i], shift)
     return ans
 
