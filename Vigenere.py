@@ -1,13 +1,13 @@
 import sys
-if (sys.argv[0] == "encode"):
+if (sys.argv[1] == "encode"):
     bool = True
 else:
     bool = False
-plaintext = sys.argv[1]
-key = sys.argv[2]
+plaintext = sys.argv[2]
+key = sys.argv[3]
 
 def shiftText(text, shift):
-    letters = "abcdefghijklmnopqrstuvwxyz"
+    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     decrypt = ""
     for i in text:
         if i in letters:
@@ -23,7 +23,7 @@ def shiftText(text, shift):
 
 def frequency(text):
     total = 0
-    letters = "abcdefghijklmnopqrstuvwxyz"
+    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for i in text:
         if i.isalpha():
@@ -36,12 +36,21 @@ def frequency(text):
         freq[i] = count * 1.0 / total
     return freq
 
-def encode(text, key, bool):
-    i = 0
-    while i != len(text):
-        fullKey += key[len(key) % i]
-        i = i + 1
-    
+def vigenereCipher(text, key, bool):
+    x = 0
+    ans = ""
+    fullKey = ""
+    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    while x != len(text):
+        fullKey = fullKey + key[x % len(key)]
+        x = x + 1
+    for i in range(len(text)):
+        shift = letters.find(fullKey[i])
+    if (not bool):
+        shift *= -1
+        ans = ans + shiftText(text[i], shift)
+    return ans
 
 
-print(encode(plaintext, key, bool))
+ans = vigenereCipher(plaintext, key, bool)
+print(ans)
